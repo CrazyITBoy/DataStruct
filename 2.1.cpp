@@ -1,3 +1,11 @@
+/*
+ä¸€å…ƒç¨€ç–å¤šé¡¹å¼è®¡ç®—å™¨ã€‚
+ï¼ˆ1ï¼‰è®¾Pnï¼ˆxï¼‰å’ŒQmï¼ˆxï¼‰åˆ†åˆ«ä¸ºä¸¤ä¸ªä¸€å…ƒç¨€ç–å¤šé¡¹å¼ï¼Œåˆ©ç”¨å•é“¾è¡¨å­˜å‚¨Pn(x)å’ŒQm(x)ã€‚
+ï¼ˆ2ï¼‰ä»é”®ç›˜è¾“å…¥ä¸€å…ƒå¤šé¡¹å¼çš„ä¿¡æ¯ï¼Œå»ºç«‹ä¸€å…ƒç¨€ç–å¤šé¡¹å¼Pn(x)å’ŒQm(x)ï¼Œå¹¶è¾“å‡ºã€‚
+ï¼ˆ3ï¼‰å®ç°Pn(x)å’ŒQm(x)ç›¸åŠ ï¼Œå¹¶è¾“å‡ºä¸¤è€…çš„å’ŒPn(x)+Qm(x)ã€‚
+ï¼ˆ4ï¼‰å®ç°Pn(x)å’ŒQm(x)ç›¸å‡ï¼Œå¹¶è¾“å‡ºä¸¤è€…å·®Pn(x)-Qm(x)ã€‚
+ï¼ˆ5ï¼‰å°±åœ°é€†ç½®ä¸¤è€…çš„å·®Pn(x)-Qm(x)ã€‚
+*/
 #include "stdafx.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -8,14 +16,14 @@
 #define OVERFLOW -1
 #define ElemType int
 typedef struct polynomialList {
-	ElemType coefficient;//ÏµÊı
-	ElemType exponent;//Ö¸Êı
+	ElemType coefficient;//ç³»æ•°
+	ElemType exponent;//æŒ‡æ•°
 	struct polynomialList * next;
 } LNode, * pol_list;
 Status InitList(pol_list * L){ 
-	/* ¹¹ÔìÒ»¸ö¿ÕµÄÏßĞÔÁ´±í */
+	/* æ„é€ ä¸€ä¸ªç©ºçš„çº¿æ€§é“¾è¡¨ */
    pol_list head;
-   head=(pol_list)malloc(sizeof(LNode)); /* Éú³ÉÍ·½áµã */
+   head=(pol_list)malloc(sizeof(LNode)); /* ç”Ÿæˆå¤´ç»“ç‚¹ */
    if(head)
    {
 	   head->next=NULL;
@@ -25,7 +33,7 @@ Status InitList(pol_list * L){
    else
      return ERROR;
  }
-//Ç°²å·¨½¨Á¢Á´±í
+//å‰æ’æ³•å»ºç«‹é“¾è¡¨
 void creakPol_list(pol_list * L, int n) {
         pol_list p,head;
 		head = * L;
@@ -60,7 +68,7 @@ Status ListDelete(pol_list * L, int pos, ElemType * e) {
 	free(q);
 	return OK;
 }
-//ºÏ²¢Á´±í°´ÕÕ¼Ó·¨»òÔò¼õ·¨Ô­Ôò½øĞĞ 
+//åˆå¹¶é“¾è¡¨æŒ‰ç…§åŠ æ³•æˆ–åˆ™å‡æ³•åŸåˆ™è¿›è¡Œ 
 	void MergeList_pol_list(pol_list * L1, pol_list * L2,int opera) {
 		pol_list p1,p2,q1,q2;	
 		q1 = *L1;
@@ -93,7 +101,7 @@ Status ListDelete(pol_list * L, int pos, ElemType * e) {
 		p2 = q2->next;
 		if (p2)  p1->next = p2;
 	}
-	//ÅÅĞò °´µİ¼õÓĞĞòÅÅĞò
+	//æ’åº æŒ‰é€’å‡æœ‰åºæ’åº
 	void sortList(pol_list * L1) {
 		pol_list p1, p2;
 		int temp;
@@ -115,7 +123,7 @@ Status ListDelete(pol_list * L, int pos, ElemType * e) {
 			p1 = p1->next;
 		}
 	}
-	//ÄæÖÃÁ´±í
+	//é€†ç½®é“¾è¡¨
 	Status reverse_list(pol_list * L) {
 		pol_list q, p, head;
 		head = *L;
@@ -129,20 +137,20 @@ Status ListDelete(pol_list * L, int pos, ElemType * e) {
 		}
 		return OK;
 	}
-	//Á´±íµÄÊä³ö 
+	//é“¾è¡¨çš„è¾“å‡º 
 	Status visit(pol_list * L) {
 		pol_list head, p;
 		head = *L;
 		p = head->next;
 		printf("-----------------------------------------\n");
-		printf("ÏµÊı    Ö¸Êı\n");
+		printf("ç³»æ•°    æŒ‡æ•°\n");
 		while (p) {
 			printf("%d\t %d\t\n", p->coefficient, p->exponent);
 			p = p->next;
 		}
 		return OK;
 	}
-	//Ïú»ÙÁ´±í
+	//é”€æ¯é“¾è¡¨
 	Status DestroyList(pol_list * L) {
 		while (*L) {
 			pol_list p = *L;
@@ -158,10 +166,10 @@ int main()
 	InitList(&L1);
 	InitList(&L2);
 	int n, opera;
-	printf("¶ÔÓÚµÚÒ»¸ö¶àÏîÊ½ÄãÏëÊäÈë¶àÉÙ¸ö£¿£¿\n");
+	printf("å¯¹äºç¬¬ä¸€ä¸ªå¤šé¡¹å¼ä½ æƒ³è¾“å…¥å¤šå°‘ä¸ªï¼Ÿï¼Ÿ\n");
 	scanf("%d",&n);
 	creakPol_list(&L1,n);
-	printf("¶ÔÓÚµÚ¶ş¸ö¶àÏîÊ½ÄãÏëÊäÈë¶àÉÙ¸ö£¿£¿\n");
+	printf("å¯¹äºç¬¬äºŒä¸ªå¤šé¡¹å¼ä½ æƒ³è¾“å…¥å¤šå°‘ä¸ªï¼Ÿï¼Ÿ\n");
 	scanf("%d", &n);
     creakPol_list(&L2, n);
 	printf("please input 0 do add(+) else do sub(-)\n");
@@ -172,7 +180,7 @@ int main()
 	visit(&L1);
 	if (opera != 0) {
 		reverse_list(&L1);
-		printf("ÄæÖÃºó£º\n");
+		printf("é€†ç½®åï¼š\n");
 		visit(&L1);
 	}
     return 0;
