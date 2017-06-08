@@ -1,6 +1,6 @@
-// ÌâÄ¿Èı.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// é¢˜ç›®ä¸‰.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
-
+/*è®¾è®¡å¹¶éªŒè¯ä¸€ä¸‹ç®—æ³•ï¼šå¸¦å¤´ç»“ç‚¹å•å‘å¾ªç¯é“¾è¡¨Lä¸­çš„æ•°æ®å…ƒç´ ä¸ºæ•´æ•°ä¸”éé€’å¢æœ‰åºï¼Œåˆ é™¤Lä¸­æ‰€æœ‰å€¼å¤§äºminkä¸”å°äº*/
 #include "stdafx.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -11,14 +11,14 @@
 #define OVERFLOW -1
 #define ElemType int
 typedef struct Link_List {
-	ElemType data;//Êı¾İ
+	ElemType data;//æ•°æ®
 	struct Link_List * next;
 } LNode, * LinkList;
 
 Status InitList(LinkList * L) {
-	/* ¹¹ÔìÒ»¸ö¿ÕµÄÏßĞÔÁ´±í */
+	/* æ„é€ ä¸€ä¸ªç©ºçš„çº¿æ€§é“¾è¡¨ */
 	LinkList head;
-	head = (LinkList)malloc(sizeof(LNode)); /* Éú³ÉÍ·½áµã */
+	head = (LinkList)malloc(sizeof(LNode)); /* ç”Ÿæˆå¤´ç»“ç‚¹ */
 	if (head)
 	{
 		head->next = NULL;
@@ -28,7 +28,7 @@ Status InitList(LinkList * L) {
 	else
 		return ERROR;
 }
-//Î²½Ó·¨½¨Á¢Á´±í
+//å°¾æ¥æ³•å»ºç«‹é“¾è¡¨
 Status creakList(LinkList * L, int n) {
 	LinkList p,q,head;
 	head = *L;
@@ -51,7 +51,7 @@ Status creakList(LinkList * L, int n) {
 	}
 	return OK;
 }
-//ÅĞ¶ÏÊÇ·ñÊÇ·ÇµİÔöÓĞĞò
+//åˆ¤æ–­æ˜¯å¦æ˜¯éé€’å¢æœ‰åº
 bool judge_is_sort(LinkList *L) {
 	LinkList p,q;
 	ElemType e;
@@ -67,7 +67,7 @@ bool judge_is_sort(LinkList *L) {
 	}
 	return true;
 }
-//É¾³ı½Úµã
+//åˆ é™¤èŠ‚ç‚¹
 void purge_list(LinkList * L) {
 	LinkList p, q, r,head;
 	head = *L;
@@ -86,7 +86,7 @@ void purge_list(LinkList * L) {
 			p = p->next;
 		}
 }
-//±éÀúÁ´±í
+//éå†é“¾è¡¨
 Status visit(LinkList * L) {
 	LinkList head,p;
 	head = *L;
@@ -98,7 +98,7 @@ Status visit(LinkList * L) {
 	}
 	return OK;
 }
-//ÄæÖÃÁ´±í
+//é€†ç½®é“¾è¡¨
 Status reverse_list(LinkList * L) {
 	LinkList q, p, head;
 	head = *L;
@@ -112,7 +112,7 @@ Status reverse_list(LinkList * L) {
 	}
 	return OK;
 }
-//Ïú»ÙÁ´±í
+//é”€æ¯é“¾è¡¨
 Status DestroyList(LinkList * L) {
 	while (*L) {
 		LinkList p = *L;
@@ -142,7 +142,7 @@ int main()
 	}
 	else
 	{
-		printf("ÄãÊäÈëµÄÁ´±í²»ÊÇ·ÇµİÔöÓĞĞòÇëÖØĞÂÊäÈë\n\n");
+		printf("ä½ è¾“å…¥çš„é“¾è¡¨ä¸æ˜¯éé€’å¢æœ‰åºè¯·é‡æ–°è¾“å…¥\n\n");
 		main();
 	}
 	DestroyList(&L);
