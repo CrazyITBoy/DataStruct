@@ -1,4 +1,10 @@
-// ���Ա���ʽ�洢��ADT.cpp : �������̨Ӧ�ó������ڵ㡣
+// 线性表链式存储的ADT.cpp : 定义控制台应用程序的入口点。
+/*
+设计并验证一下算法：判断带头结点单向链表L的数
+据元素是否为非递增有序。如果是，删除值相同的多与元素，并就地逆置删除值后的链表L;如果不是递增有序，输出相应的提示信息。
+(1)根据键盘输入数据，用尾插法建立带头结点的单向链表L。
+(2)输出带头结点的单向链表L、删除值相同的多余元素后的单向链表L、就地逆置后的单向链表L。
+*/
 #include "stdafx.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -12,7 +18,7 @@ typedef struct LNode {
 	ElemType data;
 	struct LNode * next;
 }LNode, *LinkList;
-//��ʼ������
+//初始化操作
 Status InitList(LinkList * L) {
 	LinkList head = (LinkList)malloc(sizeof(LNode));
 	if (!head) exit(OVERFLOW);
@@ -20,7 +26,7 @@ Status InitList(LinkList * L) {
 	*L = head;
 	return OK;
 }
-//ǰ�巨��������
+//前插法建立链表
 void creakLinkList(LinkList * L, int n) {
 	LinkList p, head;
 	int i;
@@ -35,7 +41,7 @@ void creakLinkList(LinkList * L, int n) {
 		head->next = p;
 	}
 }
-//������һ��Ϊ������һֻ������������ֻ��ż��
+//把链表一分为二，表一只有奇数，表二只有偶数
 void split(LinkList * L, LinkList * L1, LinkList * L2) {
 	LinkList head, head2,p,r,q;
 	head2= (LinkList)malloc(sizeof(LNode));
@@ -61,7 +67,7 @@ void split(LinkList * L, LinkList * L1, LinkList * L2) {
 	*L1 = head;
 	*L2 = head2;
 }
-//���� ���ݼ���������
+//排序 按递减有序排序
 void sortList(LinkList * L1) {
 	LinkList p1, p2;
 	int temp;
@@ -80,7 +86,7 @@ void sortList(LinkList * L1) {
 		p1 = p1->next;
 	}
 }
-//ɾ������mink��С��maxk��Ԫ��
+//删除大于mink且小于maxk的元素
 void Delete_List(LinkList * L,int mink,int maxk) {
 	LinkList head,p,q;
 	head = *L;
@@ -116,10 +122,10 @@ int main()
 	LinkList L, L1, L2;
 	int n,mink,maxk;
 	InitList(&L);
-	printf("��������һ������������L��Ԫ�ظ���\n");
+	printf("请您输入一个数代表链表L的元素个数\n");
 	scanf("%d",&n);
 	creakLinkList(&L,n);
-	printf("��������mink��maxk:\n");
+	printf("请您输入mink和maxk:\n");
 	scanf("%d %d",&mink,&maxk);
 	Delete_List(&L,mink,maxk);
 	sortList(&L);
