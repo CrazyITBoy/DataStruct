@@ -1,3 +1,9 @@
+/*
+设计并验证以下算法：设顺序表L中的数据元素为整数且非递增有序，删除其值相同的元素，即顺序表L中西安通的元素只保留一个，并逆置删除后的顺序表L。
+ （1）根据键盘输入输入数据建立顺序表L.
+ （2）输出顺序表L、删除值相同多余元素后的顺序表L、逆置的顺序表L.
+ （3）假设顺序表L的长度为n，要求以O(n)的时间复杂度完成后对值相同多余元素的删除。
+*/
 #include "stdafx.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -23,34 +29,34 @@ Status InitList(SqList * L) {
 	return OK;
 }
 Status ListInsert_sq(SqList * L, int i, int e) {
-	if (i < 1 || i > L->length + 1)//�ж��������Ԫ���Ƿ񳬹�����С�뵱ǰ����
+	if (i < 1 || i > L->length + 1)//判断所插入的元素是否超过或则小与当前长度
 		return ERROR;
-	if (L->length >= L->listSize) {//�жϵ�ǰ��Ԫ�صļ����Ƿ��ʹ��֮ǰ������ڴ��Ѿ������ã���������þͷ���һ���µ��ڴ�
-		int * newbase = (int *)realloc(L->elem, (L->listSize + LISTINCREMENT) * sizeof(int));/*realloc������������������
-																							 �����˼����һ������Ϊԭ�����׵�ַ���ڶ�������Ϊ���ڵĳ��� */
-		if (!newbase)//�ж��Ƿ�ɹ��������µĿռ�
+	if (L->length >= L->listSize) {//判断当前新元素的加入是否会使得之前分配的内存已经不够用，如果不够用就分配一个新的内存
+		int * newbase = (int *)realloc(L->elem, (L->listSize + LISTINCREMENT) * sizeof(int));/*realloc函数在这里是增加内
+																							 存的意思，第一个参数为原来的首地址，第二个参数为现在的长度 */
+		if (!newbase)//判断是否成功分配了新的空间
 			exit(OVERFLOW);
-		L->elem = newbase;//���·���Ŀռ���׵�ַ��ֵ��ԭ���Ļ�ַ
+		L->elem = newbase;//将新分配的空间的首地址赋值给原来的基址
 		L->listSize += LISTINCREMENT;
 	}
-	//�ҵ�Ҫ�����Ԫ�صĵ�ַ��ֵ��q,�ҵ����һ��Ԫ�ظ�ֵ��p
+	//找到要插入的元素的地址赋值给q,找到最后一个元素赋值给p
 	int * q = &(L->elem[i - 1]);
 	int * p = &(L->elem[L->length - 1]);
-	//��Ԫ�غ���
+	//把元素后移
 	for (;p >= q;p--)
 		*(p + 1) = *p;
-	//��Ҫ�����Ԫ�ظ�ֵ��q
+	//把要插入的元素赋值给q
 	*q = e;
 	L->length++;
 	return OK;
 }
-//�ݼ�����
+//递减排序
 Status SortUnionLIst(SqList *L) {
 	int t;
 	int i ;
-	//���ѭ������һ���߶�����
+	//外层循环决定一共走多少趟
 	for ( i = 0;i<L->length - 1;i++)
-		//�ڲ�ѭ�� ���һ����������һ�������򽻻�����
+		//内层循环 如果一个数比另外一个数大，则交换他们
 		for (int j = 0;j < L->length - i - 1;j++)
 			if (L->elem[j] > L->elem[j + 1]) {
 				t = L->elem[j];
@@ -59,7 +65,7 @@ Status SortUnionLIst(SqList *L) {
 			}
 	return OK;
 }
-//����˳���
+//逆置顺序表
 Status InverseList(SqList *L) {
 	int *p, *q,t;
 	p =&(L->elem[0]);
@@ -71,7 +77,7 @@ Status InverseList(SqList *L) {
 	}
 	return OK;
 }
-//���Ϻϲ�
+//集合合并
 void MergeList_sq(SqList * L1, SqList * L2, SqList * L3) {
 	int *p1, *p2, *p3, *p1_last, *p2_last;
 	L3->listSize = L3->length = L1->length + L2->length;
@@ -99,7 +105,7 @@ void PrintList(SqList *L) {
 		printf("%d ", L->elem[i]);
 	printf("\n");
 }
-//�������Ա�
+//销毁线性表
 Status DesroyList(SqList *L) {
 	free(L->elem);
 	return OK;
@@ -112,12 +118,12 @@ int main()
 	InitList(&L1);
 	InitList(&L2);
 	InitList(&L3);
-	printf("�����뼯��һ��6�����ݣ�\n");
+	printf("请输入集合一的6个数据：\n");
 	for (i = 0;i < 6;i++) {
 		scanf("%d", &elem[i]);
 		ListInsert_sq(&L1, i + 1, elem[i]);
 	}
-	printf("�����뼯�϶���3�����ݣ�\n");
+	printf("请输入集合二的3个数据：\n");
 	for (i = 0;i < 3;i++) {
 		scanf("%d", &elem[i]);
 		ListInsert_sq(&L2, i + 1, elem[i]);
