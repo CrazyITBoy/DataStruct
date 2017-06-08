@@ -1,58 +1,64 @@
+/*
+è®¾è®¡å¹¶éªŒè¯ä¸€ä¸‹ç®—æ³•ï¼šè®¾é¡ºåºè¡¨Aå’ŒBä¸­çš„å…ƒç´ ä¸ºæ•´æ•°ä¸”å•è°ƒé€’å¢æœ‰åºï¼Œå°†è¿™ä¸¤å¼ è¡¨åˆå¹¶æˆé¡ºåºè¡¨Cã€‚
+ï¼ˆ1ï¼‰é¡ºåºè¡¨å•è°ƒé€’å‡æœ‰åºã€‚
+ï¼ˆ2ï¼‰æ ¹æ®é”®ç›˜è¾“å…¥æ•°æ®å»ºç«‹é¡ºåºè¡¨Aå’ŒBã€‚
+ï¼ˆ3ï¼‰è¾“å‡ºé¡ºåºè¡¨Aã€Bã€Cã€‚
+*/
 #include<stdio.h>
 #include<malloc.h>
 #include<stdlib.h>
-#define LIST_INT_SIZE 100  //ÏßĞÔ±í´æ´¢¿Õ¼äµÄ³õÊ¼·ÖÅäÁ¿
-#define  LISTINCREMENT 10 //ÏßĞÔ±í´æ´¢¿Õ¼ä·îÅãµÄÔöÁ¿
+#define LIST_INT_SIZE 100  //çº¿æ€§è¡¨å­˜å‚¨ç©ºé—´çš„åˆå§‹åˆ†é…é‡
+#define  LISTINCREMENT 10 //çº¿æ€§è¡¨å­˜å‚¨ç©ºé—´å¥‰é™ªçš„å¢é‡
 #define Status int
 #define OK 1
 #define OVERFLOW 0
 #define ERROR -1
 typedef struct {
-	int * elem;//´æ´¢¿Õ¼ä»ùÖ·
-	int length;//µ±Ç°³¤¶È
-	int listsize;//µ±Ç°·ÖÅäµÄ´æ´¢ÈİÁ¿
+	int * elem;//å­˜å‚¨ç©ºé—´åŸºå€
+	int length;//å½“å‰é•¿åº¦
+	int listsize;//å½“å‰åˆ†é…çš„å­˜å‚¨å®¹é‡
 }SqList;
-//³õÊ¼¿ÕÁ´±í
+//åˆå§‹ç©ºé“¾è¡¨
 Status Inilist_sq(SqList *L) {
 	L->elem = (int *)malloc(LIST_INT_SIZE * sizeof(int));
 	if (!L->elem) {
 		exit(OVERFLOW);
 	}
-	L->length = 0;//ÉèÖÃÁ´±íµÄ³õÊ¼³¤¶ÈÎª0
-	L->listsize = LIST_INT_SIZE;//³õÊ¼´æ´¢ÈİÁ¿
+	L->length = 0;//è®¾ç½®é“¾è¡¨çš„åˆå§‹é•¿åº¦ä¸º0
+	L->listsize = LIST_INT_SIZE;//åˆå§‹å­˜å‚¨å®¹é‡
 	return OK;
 }
-//Ïú»ÙÏßĞÔÁ´±í
+//é”€æ¯çº¿æ€§é“¾è¡¨
 Status DesroyList(SqList * L) {
 	free(L->elem);
 	return OK;
 }
-//²åÈë²Ù×÷
+//æ’å…¥æ“ä½œ
 Status ListInsert_sq(SqList * L, int i, int e) {
-	if (i < 1 || i > L->length + 1)//ÅĞ¶ÏËù²åÈëµÄÔªËØÊÇ·ñ³¬¹ı»òÔòĞ¡Óëµ±Ç°³¤¶È
+	if (i < 1 || i > L->length + 1)//åˆ¤æ–­æ‰€æ’å…¥çš„å…ƒç´ æ˜¯å¦è¶…è¿‡æˆ–åˆ™å°ä¸å½“å‰é•¿åº¦
 		return ERROR;
-	if (L->length >= L->listsize) {//ÅĞ¶Ïµ±Ç°ĞÂÔªËØµÄ¼ÓÈëÊÇ·ñ»áÊ¹µÃÖ®Ç°·ÖÅäµÄÄÚ´æÒÑ¾­²»¹»ÓÃ£¬Èç¹û²»¹»ÓÃ¾Í·ÖÅäÒ»¸öĞÂµÄÄÚ´æ
-		int * newbase = (int *)realloc(L->elem, (L->listsize + LISTINCREMENT) * sizeof(int));/*reallocº¯ÊıÔÚÕâÀïÊÇÔö¼ÓÄÚ
-																							 ´æµÄÒâË¼£¬µÚÒ»¸ö²ÎÊıÎªÔ­À´µÄÊ×µØÖ·£¬µÚ¶ş¸ö²ÎÊıÎªÏÖÔÚµÄ³¤¶È */
-		if (!newbase)//ÅĞ¶ÏÊÇ·ñ³É¹¦·ÖÅäÁËĞÂµÄ¿Õ¼ä
+	if (L->length >= L->listsize) {//åˆ¤æ–­å½“å‰æ–°å…ƒç´ çš„åŠ å…¥æ˜¯å¦ä¼šä½¿å¾—ä¹‹å‰åˆ†é…çš„å†…å­˜å·²ç»ä¸å¤Ÿç”¨ï¼Œå¦‚æœä¸å¤Ÿç”¨å°±åˆ†é…ä¸€ä¸ªæ–°çš„å†…å­˜
+		int * newbase = (int *)realloc(L->elem, (L->listsize + LISTINCREMENT) * sizeof(int));/*reallocå‡½æ•°åœ¨è¿™é‡Œæ˜¯å¢åŠ å†…
+																							 å­˜çš„æ„æ€ï¼Œç¬¬ä¸€ä¸ªå‚æ•°ä¸ºåŸæ¥çš„é¦–åœ°å€ï¼Œç¬¬äºŒä¸ªå‚æ•°ä¸ºç°åœ¨çš„é•¿åº¦ */
+		if (!newbase)//åˆ¤æ–­æ˜¯å¦æˆåŠŸåˆ†é…äº†æ–°çš„ç©ºé—´
 			exit(OVERFLOW);
-		L->elem = newbase;//½«ĞÂ·ÖÅäµÄ¿Õ¼äµÄÊ×µØÖ·¸³Öµ¸øÔ­À´µÄ»ùÖ·
+		L->elem = newbase;//å°†æ–°åˆ†é…çš„ç©ºé—´çš„é¦–åœ°å€èµ‹å€¼ç»™åŸæ¥çš„åŸºå€
 		L->listsize = +LISTINCREMENT;
 	}
-	//ÕÒµ½Òª²åÈëµÄÔªËØµÄµØÖ·¸³Öµ¸øq,ÕÒµ½×îºóÒ»¸öÔªËØ¸³Öµ¸øp
+	//æ‰¾åˆ°è¦æ’å…¥çš„å…ƒç´ çš„åœ°å€èµ‹å€¼ç»™q,æ‰¾åˆ°æœ€åä¸€ä¸ªå…ƒç´ èµ‹å€¼ç»™p
 	int * q = &(L->elem[i - 1]);
 	int * p = &(L->elem[L->length - 1]);
-	//°ÑÔªËØºóÒÆ
+	//æŠŠå…ƒç´ åç§»
 	for (;p >= q;p--)
 		*(p + 1) = *p;
-	//°ÑÒª²åÈëµÄÔªËØ¸³Öµ¸øq
+	//æŠŠè¦æ’å…¥çš„å…ƒç´ èµ‹å€¼ç»™q
 	*q = e;
 	L->length++;
 	return OK;
 }
-//É¾³ı±íÖĞÏàÍ¬ÔªËØµÄ²Ù×÷
+//åˆ é™¤è¡¨ä¸­ç›¸åŒå…ƒç´ çš„æ“ä½œ
 void purgr_sq(SqList *L) {
-	int k = -1;//ÅĞ¶Ï±íÎ²
+	int k = -1;//åˆ¤æ–­è¡¨å°¾
 	int j;
 	for (int i = 0;i<L->length;i++) {
 		j = 0;
@@ -63,7 +69,7 @@ void purgr_sq(SqList *L) {
 	}
 	L->length = k + 1;
 }
-//ÄæÖÃË³Ğò±í
+//é€†ç½®é¡ºåºè¡¨
 Status InverseList(SqList *L) {
 	int *p, *q,t;
 	p =&(L->elem[0]);
@@ -75,13 +81,13 @@ Status InverseList(SqList *L) {
 	}
 	return OK;
 }
-//µİ¼õÅÅĞò
+//é€’å‡æ’åº
 Status SortUnionLIst(SqList *L) {
 	int t;
 	int i = 0;
-	//Íâ²ãÑ­»·¾ö¶¨Ò»¹²×ß¶àÉÙÌË
+	//å¤–å±‚å¾ªç¯å†³å®šä¸€å…±èµ°å¤šå°‘è¶Ÿ
 	for (int i = 0;i<L->length - 1;i++)
-		//ÄÚ²ãÑ­»· Èç¹ûÒ»¸öÊı±ÈÁíÍâÒ»¸öÊı´ó£¬Ôò½»»»ËûÃÇ
+		//å†…å±‚å¾ªç¯ å¦‚æœä¸€ä¸ªæ•°æ¯”å¦å¤–ä¸€ä¸ªæ•°å¤§ï¼Œåˆ™äº¤æ¢ä»–ä»¬
 		for (int j = 0;j < L->length - i - 1;j++) 
 			if (L->elem[j] < L->elem[j+1]) {
 				t = L->elem[j];
@@ -90,8 +96,8 @@ Status SortUnionLIst(SqList *L) {
 			}
 	return OK;
 }
-//Êä³öÏßĞÔ±íµÄ²Ù×÷
-Status printlist(SqList * L) {//ÊäÈë±íL
+//è¾“å‡ºçº¿æ€§è¡¨çš„æ“ä½œ
+Status printlist(SqList * L) {//è¾“å…¥è¡¨L
 	int i;
 	for (i = 0;i<L->length;i++)
 		printf("%d ", *(L->elem + i));
@@ -105,24 +111,24 @@ int main()
 	int num;
 	int i;
 	Inilist_sq(&L);
-	printf("ÇëÊäÈëÏëÒªÊäÈëµÄÊı¾İ¸öÊı£º\n");
+	printf("è¯·è¾“å…¥æƒ³è¦è¾“å…¥çš„æ•°æ®ä¸ªæ•°ï¼š\n");
 	scanf("%d",&length);
-	printf("ÇëÄã¿ªÊ¼ÊäÈëÊı¾İ£º\n");
+	printf("è¯·ä½ å¼€å§‹è¾“å…¥æ•°æ®ï¼š\n");
 	for (i = 0;i < length;i++) {
 		scanf("%d",&num);
 		ListInsert_sq(&L,i+1,num);
 	}
-	SortUnionLIst(&L);//µİ¼õÅÅĞò
-	printlist(&L);//Êä³öÅÅĞòºóµÄÏßĞÔ±í
+	SortUnionLIst(&L);//é€’å‡æ’åº
+	printlist(&L);//è¾“å‡ºæ’åºåçš„çº¿æ€§è¡¨
 
-	purgr_sq(&L);//É¾³ıÖÃÏàÍ¨µÄÔªËØ
-	printf("É¾³ıÖØ¸´µÄÔªËØºóµÄÏßĞÔ±í£º\n");
+	purgr_sq(&L);//åˆ é™¤ç½®ç›¸é€šçš„å…ƒç´ 
+	printf("åˆ é™¤é‡å¤çš„å…ƒç´ åçš„çº¿æ€§è¡¨ï¼š\n");
 	printlist(&L);
 
 	InverseList(&L);
-	printf("ÄæÖÃºóµÄÏßĞÔ±í\n");
+	printf("é€†ç½®åçš„çº¿æ€§è¡¨\n");
 	printlist(&L);
-	DesroyList(&L);//Ïú»ÙÏßĞÔ±í
+	DesroyList(&L);//é”€æ¯çº¿æ€§è¡¨
 	return 0;
 }
 
