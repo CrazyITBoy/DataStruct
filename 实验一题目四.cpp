@@ -1,4 +1,4 @@
-// ÌâÄ¿4.cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// é¢˜ç›®4.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 //
 
 #include "stdafx.h"
@@ -43,7 +43,7 @@ Status ListInsert(Lsql * L, int n, ElemType e) {
 }
 Status MergeList(Lsql *L1, Lsql *L2,Lsql *L3) {
 	int operation;
-	printf("ÇëÄúÊäÈë1×ö²¢ÔËËã\nÇëÄúÊäÈë2×ö½»ÔËËã\nÇëÄúÊäÈë3×ö²îÔËËã\nÇëÄúÊäÈë4×ö²¹ÔËËã\n");
+	printf("è¯·æ‚¨è¾“å…¥1åšå¹¶è¿ç®—\nè¯·æ‚¨è¾“å…¥2åšäº¤è¿ç®—\nè¯·æ‚¨è¾“å…¥3åšå·®è¿ç®—\nè¯·æ‚¨è¾“å…¥4åšè¡¥è¿ç®—\n");
 	scanf("%d",operation);
 	switch (operation)
 	{
@@ -51,7 +51,7 @@ Status MergeList(Lsql *L1, Lsql *L2,Lsql *L3) {
 		break;
 
 	default:
-		printf("ÄãÊäÈëµÄÖ¸ÁîÓĞÎó");
+		printf("ä½ è¾“å…¥çš„æŒ‡ä»¤æœ‰è¯¯");
 	}
 
 
