@@ -1,3 +1,19 @@
+/*
+设计并验证如下算法：图采用邻接矩阵表示，实现无向图的深度优先搜索与有向图的广度优先搜索。
+#define INFINTY INT_MAX //图的数组（邻接矩阵）存储表示
+#define MAX_VERTEX_NUM 20
+typedef enum {DG,DN,AG,AN}Graphkind;//{有向图，有向网，无向图，无向网}
+typedef struct AreCell{
+VRType adj;//VRType 是顶点关系类型。对无权图，用0或1表示相邻与否；对带权图，则为权值类型。
+InfoType * info;//该弧相关信息指针
+}Arecell,AdjMatrix[MAX_VERTEX_NUM][ MAX_VERTEX_NUM];
+Typedef struct{
+VertexType vexs[MAX_VERTEX_NUM];//顶点向量
+AdjMatrix arcs;  //邻接矩阵
+Int vexnum,arcnum;  //图的当前顶点数和弧数
+Graphkind kind;  //图的种类标志
+}Mgraph;
+*/
 #include "stdafx.h"
 #include<stdio.h>
 #include <limits.h>
