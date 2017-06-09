@@ -1,6 +1,8 @@
-// ��Ŀһ����.cpp : �������̨Ӧ�ó������ڵ㡣
+// 题目一代码.cpp : 定义控制台应用程序的入口点。
 //
-
+/*
+设计并验证如下算法：在完善“12.6.4参考源程序”的前提下：按后序序列建立二叉树的二叉链表结构，求其单分支节点数目、双分支节点数目，并交换该二叉树。
+*/
 #include "stdafx.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -27,19 +29,19 @@ typedef struct BiTNode {
 	TElemType data;
 	struct BiTNode * lchild, *rchild;
 }BiTNode, *BiTree;
-//����ջ�Ľṹ��
+//定义栈的结构体
 typedef struct {
-	int  top;//ջ��ָ��
-	BiTree base[Init_STACT_SIZE];//ջ����ָ��
+	int  top;//栈顶指针
+	BiTree base[Init_STACT_SIZE];//栈顶底指针
 }Sqstack;
 
-//----------------------������ջ�Ĳ���
-//��ʼ��ջ
+//----------------------以下是栈的操作
+//初始化栈
 Status InitStatck(Sqstack * sq) {
 	sq->top = -1;
 	return OK;
 }
-//��ջ
+//入栈
 Status PushStatck(Sqstack * sq, BiTree * e) {
 	if (sq->top == (Init_STACT_SIZE - 1)) {
 		exit(OVERFLOW);
@@ -47,35 +49,35 @@ Status PushStatck(Sqstack * sq, BiTree * e) {
 	else
 		sq->base[++sq->top] = *e;
 }
-//��ջ
+//出栈
 Status PopStack(Sqstack * sq, BiTree * e) {
 	if (sq->top == -1)
 		exit(-3);
 	*e = sq->base[sq->top--];
 }
-//�ж�ջ�Ƿ�Ϊ��
+//判断栈是否为空
 Status StackEmpty(Sqstack * sq) {
 	if (sq->top == -1)
 		return 1;
 	else
 		return 0;
 }
-//����������
+//二叉树建议
 Status InitBiTree(BiTree * BT) {
 	*BT = NULL;
 	return OK;
 }
-//����ݹ齨��������
+//后序递归建立二叉树
 BiTree  Post_Create_BT()
 {
 	BiTree  BT;
 	char ch;
 	ch = getch();
-    if (ch == '#') return NULL;   //�������
+    if (ch == '#') return NULL;   //构造空树
 	else {
-		BT = (BiTree)malloc(sizeof(BiTNode));//�����½��
-		BT->lchild = Post_Create_BT();     //����������
-		BT->rchild = Post_Create_BT();     //����������
+		BT = (BiTree)malloc(sizeof(BiTNode));//构造新结点
+		BT->lchild = Post_Create_BT();     //构造左子树
+		BT->rchild = Post_Create_BT();     //构造右子树
 		BT->data = ch;
 		return  BT;
 	}
@@ -107,13 +109,13 @@ Status NRPreOrder(BiTree BT) {
 			else if (Visit(p) == 2)
 				doubleNodeSum++;
 			printf("%c ",p->data);
-			PushStatck(&sq, &p);                         /*����ǰָ��pѹջ*/
-			p = p->lchild;              /*ָ��ָ��p������*/
+			PushStatck(&sq, &p);                         /*将当前指针p压栈*/
+			p = p->lchild;              /*指针指向p的左孩子*/
 		}
 		if (!StackEmpty(&sq))
 		{
-			PopStack(&sq, &p);                         /*��ջ�е���ջ��Ԫ��*/
-			p = p->rchild;                     /*ָ��ָ��p���Һ��ӽ��*/
+			PopStack(&sq, &p);                         /*从栈中弹出栈顶元素*/
+			p = p->rchild;                     /*指针指向p的右孩子结点*/
 		}
 	}
 	return OK;
@@ -134,12 +136,12 @@ int main()
 {
 	BiTree BT;
 	InitBiTree(&BT);
-	printf("��������������У����򣩣�\n");
+	printf("请输入二叉树序列（先序）：\n");
 	BT=Post_Create_BT();
 	NRPreOrder(BT);
-	printf("�����������: %d\n˫�������: %d\n",singleNodeSum,doubleNodeSum);
+	printf("单结点总数是: %d\n双结点数是: %d\n",singleNodeSum,doubleNodeSum);
 	change_left_right(BT);
-	printf("������������ı��������\n");
+	printf("交换二叉树后的遍历输出：\n");
 	NRPreOrder(BT);
     return 0;
 }
