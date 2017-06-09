@@ -23,38 +23,38 @@ typedef struct {
 	int vexnum, arcnum;
 	Graphkind kind;
 }GraphMap;
-//¶¨Òå¶ÓÁĞµÄ½á¹¹Ìå
+//å®šä¹‰é˜Ÿåˆ—çš„ç»“æ„ä½“
 typedef struct {
 	int * base;
 	int front;
 	int rear;
 }SqQueue;
-//³õÊ¼»¯¶ÓÁĞ
+//åˆå§‹åŒ–é˜Ÿåˆ—
 void InitQueue(SqQueue * Q) {
 	Q->base = (int *)malloc(MAXQSIZE * sizeof(int));
 	if (!Q->base) exit(-1);
 	Q->front = Q->rear = 0;
 }
-//½ø¶ÓÁĞ
+//è¿›é˜Ÿåˆ—
 void EnQueue(SqQueue * Q, int e) {
 	if ((Q->rear + 1) % MAXQSIZE == Q->front)  return;
 	Q->base[Q->rear] = e;
 	Q->rear = (Q->rear + 1) % MAXQSIZE;
 }
-//³ö¶ÓÁĞ
+//å‡ºé˜Ÿåˆ—
 void DeQueue(SqQueue * Q, int * e) {
 	if (Q->rear == Q->front)  return;
 	*e = Q->base[Q->front];
 	Q->front = (Q->front + 1) % MAXQSIZE;
 }
-//ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ
+//åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
 int QueueEmpty(SqQueue * Q) {
 	if (Q->front == Q->rear)
 		return 1;
 	else
 		return 0;
 }
-//¶¨Î»²Ù×÷
+//å®šä½æ“ä½œ
 int Locate(GraphMap G, VertexType v) {
 	int i;
 	for (i = 0;i < G.vexnum;i++)
@@ -62,7 +62,7 @@ int Locate(GraphMap G, VertexType v) {
 			break;
 	return i - 1;
 }
-//´´½¨Í¼ 
+//åˆ›å»ºå›¾ 
 void Create(GraphMap * G, int m) {
 	int i, j, k;
 	VRType w;
@@ -71,9 +71,9 @@ void Create(GraphMap * G, int m) {
 		G->kind = AG;
 	else
 		G->kind = DG;
-	printf("ÇëÊäÈëÍ¼µÄ¶¥µãµÄÊıÄ¿ºÍ»¡ÊıÄ¿:\n");
+	printf("è¯·è¾“å…¥å›¾çš„é¡¶ç‚¹çš„æ•°ç›®å’Œå¼§æ•°ç›®:\n");
 	scanf("%d %d", &G->vexnum, &G->arcnum);
-	printf("ÇëÊäÈë¶¥µã£¨°´ÕÕË³Ğò):\n");
+	printf("è¯·è¾“å…¥é¡¶ç‚¹ï¼ˆæŒ‰ç…§é¡ºåº):\n");
 	for (i = 0;i < G->vexnum;i++) {
 		scanf("%c", &G->vexs[i]);
 		if (G->vexs[i] == '\n')
@@ -84,7 +84,7 @@ void Create(GraphMap * G, int m) {
 			G->arcs[i][j].adj = INFINITY;
 			G->arcs[i][j].info = NULL;
 		}
-	printf("»¡¶ÔÓ¦µÄµãµÄÁªÏµ:\n");
+	printf("å¼§å¯¹åº”çš„ç‚¹çš„è”ç³»:\n");
 	for (k = 0;k < G->arcnum;k++) {
 		scanf("%c",&v1);
 		while (v1 == '\n'||v1 == ' ') {
@@ -114,7 +114,7 @@ void DFS(GraphMap G, int v) {
 	if (!visited[v])
 		DFS(G, v);
 }
-//ÎŞÏòÍ¼µÄÉî¶È±éÀú
+//æ— å‘å›¾çš„æ·±åº¦éå†
 void DFSTraverse(GraphMap G) {
 	VertexType V;
 	for (int i = 0;i < G.vexnum;i++)
@@ -123,7 +123,7 @@ void DFSTraverse(GraphMap G) {
 		if (!visited[i])
 			DFS(G, i);
 }
-//ÓĞÏòÍ¼µÄ¹ã¶È±éÀú
+//æœ‰å‘å›¾çš„å¹¿åº¦éå†
 void BFSTraverse(GraphMap G) {
 	int v;
 	int u;
@@ -150,13 +150,13 @@ void BFSTraverse(GraphMap G) {
 int main()
 {
 	GraphMap G1, G2;
-	printf("ÊäÈëÎŞÏòÍ¼(Ã¿´ÎÊäÈëÒ»¸öÊı¾İ¶¼ĞèÒª»Ø³µ)\n");
-	Create(&G1, 2);//´´½¨ÎŞÏòÍ¼
-	printf("ÎŞÏòÍ¼Éî¶È±éÀú£º\n");
+	printf("è¾“å…¥æ— å‘å›¾(æ¯æ¬¡è¾“å…¥ä¸€ä¸ªæ•°æ®éƒ½éœ€è¦å›è½¦)\n");
+	Create(&G1, 2);//åˆ›å»ºæ— å‘å›¾
+	printf("æ— å‘å›¾æ·±åº¦éå†ï¼š\n");
 	BFSTraverse(G1);
-	printf("\nÊäÈëÓĞÏòÍ¼(Ã¿´ÎÊäÈëÒ»¸öÊı¾İ¶¼ĞèÒª»Ø³µ):\n");
-	Create(&G2, 1);//´´½¨ÓĞÏòÍ¼
-	printf("ÓĞÏòÍ¼¹ã¶È±éÀú£º\n");
+	printf("\nè¾“å…¥æœ‰å‘å›¾(æ¯æ¬¡è¾“å…¥ä¸€ä¸ªæ•°æ®éƒ½éœ€è¦å›è½¦):\n");
+	Create(&G2, 1);//åˆ›å»ºæœ‰å‘å›¾
+	printf("æœ‰å‘å›¾å¹¿åº¦éå†ï¼š\n");
 	DFSTraverse(G2);
 	return 0;
 }
