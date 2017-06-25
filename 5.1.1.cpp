@@ -1,4 +1,4 @@
-// ÌâÄ¿Ò».cpp : ¶¨Òå¿ØÖÆÌ¨Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
+// é¢˜ç›®ä¸€.cpp : å®šä¹‰æ§åˆ¶å°åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
 #include "stdafx.h"
 #include<stdio.h>
 #include<stdlib.h>
@@ -20,12 +20,12 @@ typedef struct BiTNode {
 	TElemType data;
 	struct BiTNode * lchild, *rchild;
 }BiTNode, * BiTree;
-//¶¨ÒåÕ»µÄ½á¹¹Ìå
+//å®šä¹‰æ ˆçš„ç»“æ„ä½“
 typedef struct {
-	int  top;//Õ»¶¥Ö¸Õë
-	BiTree base[Init_STACT_SIZE];//Õ»¶¥µ×Ö¸Õë
+	int  top;//æ ˆé¡¶æŒ‡é’ˆ
+	BiTree base[Init_STACT_SIZE];//æ ˆé¡¶åº•æŒ‡é’ˆ
 }Sqstack;
-//¶¨Òå¶ÓÁĞµÄ½á¹¹Ìå
+//å®šä¹‰é˜Ÿåˆ—çš„ç»“æ„ä½“
 typedef struct {
 	BiTree * base;
 	int front;
@@ -33,13 +33,13 @@ typedef struct {
 }SqQueue;
 
 
-//----------------------ÒÔÏÂÊÇÕ»µÄ²Ù×÷
-//³õÊ¼»¯Õ»
+//----------------------ä»¥ä¸‹æ˜¯æ ˆçš„æ“ä½œ
+//åˆå§‹åŒ–æ ˆ
 Status InitStatck(Sqstack * sq) {
 	sq->top = -1;
 	return OK;
 }
-//ÈëÕ»
+//å…¥æ ˆ
 Status PushStatck(Sqstack * sq,BiTree * e) {
 	if (sq->top == (Init_STACT_SIZE - 1)) {
 		exit(OVERFLOW);
@@ -47,66 +47,66 @@ Status PushStatck(Sqstack * sq,BiTree * e) {
 	else
 		  sq->base[++sq->top] = * e;
 }
-//³öÕ»
+//å‡ºæ ˆ
 Status PopStack(Sqstack * sq, BiTree * e) {
 	if (sq->top == -1)
 		exit(-3);
 	* e=  sq->base[sq->top--] ;
 }
-//ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ
+//åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º
 Status StackEmpty(Sqstack * sq) {
 	if (sq->top == -1)
 		return 1;
 	else
 		return 0;
 }
-//-----------------------------ÒÔÏÂÊÇ¶ÓÁĞ²Ù×÷
-//³õÊ¼»¯¶ÓÁĞ
+//-----------------------------ä»¥ä¸‹æ˜¯é˜Ÿåˆ—æ“ä½œ
+//åˆå§‹åŒ–é˜Ÿåˆ—
 Status InitQueue(SqQueue * Q) {
 	Q->base = (BiTree *)malloc(MAXQSIZE * sizeof(BiTree));
 	if (!Q->base) exit(OVERFLOW);
 	Q->front = Q->rear = 0;
 	return OK;
 }
-//½ø¶ÓÁĞ
+//è¿›é˜Ÿåˆ—
 Status EnQueue(SqQueue * Q, BiTree e) {
 	if ((Q->rear + 1) % MAXQSIZE == Q->front)  return ERROR;
 	Q->base[Q->rear] = e;
 	Q->rear = (Q->rear + 1) % MAXQSIZE;
 	return OK;
 }
-//³ö¶ÓÁĞ
+//å‡ºé˜Ÿåˆ—
 Status DeQueue(SqQueue * Q, BiTree * e) {
 	if (Q->rear == Q->front)  return ERROR;
 	*e = Q->base[Q->front];
 	Q->front = (Q->front + 1) % MAXQSIZE;
 	return OK;
 }
-//ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ
+//åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
 Status QueueEmpty(SqQueue * Q) {
 	if (Q->front == Q->rear)
 		return 1;
 	else
 		return 0;
 }
-//ÒÔÏÂÊÇ¶ş²æÊ÷Ïà¹Ø²Ù×÷
-//¹¹Ôì¿Õ¶ş²æÊ÷
+//ä»¥ä¸‹æ˜¯äºŒå‰æ ‘ç›¸å…³æ“ä½œ
+//æ„é€ ç©ºäºŒå‰æ ‘
 Status InitBiTree(BiTree * BT) {
 	*BT = NULL;
 	return OK;
 }
-//ÏÈĞòµİ¹é½¨Á¢¶ş²æÊ÷
+//å…ˆåºé€’å½’å»ºç«‹äºŒå‰æ ‘
 BiTree  Pre_Create_BT()
 {
 	BiTree  BT;
 	char ch;
 	 ch=getch();
-	 if (ch =='#') return NULL;   //¹¹Ôì¿ÕÊ÷
+	 if (ch =='#') return NULL;   //æ„é€ ç©ºæ ‘
 	else {
-		BT = (BiTree )malloc(sizeof(BiTNode));//¹¹ÔìĞÂ½áµã
+		BT = (BiTree )malloc(sizeof(BiTNode));//æ„é€ æ–°ç»“ç‚¹
 		BT->data = ch;
-		BT->lchild = Pre_Create_BT();     //¹¹Ôì×ó×ÓÊ÷
-		BT->rchild = Pre_Create_BT();     //¹¹ÔìÓÒ×ÓÊ÷
+		BT->lchild = Pre_Create_BT();     //æ„é€ å·¦å­æ ‘
+		BT->rchild = Pre_Create_BT();     //æ„é€ å³å­æ ‘
 		return  BT;
 	}
 }
@@ -152,22 +152,22 @@ void LevelOrder(BiTree BT)
 	SqQueue  Q;
 	InitQueue(&Q);
 	if (BT==NULL)  exit;
-	  p =  BT;   // ³õÊ¼»¯
+	  p =  BT;   // åˆå§‹åŒ–
 	printf("%c",p->data); 
-	EnQueue(&Q, p);  //·ÃÎÊ¸ù½áµã£¬²¢½«¸ù½áµãÈë¶Ó 
-	while (!QueueEmpty(&Q)) {   //µ±¶Ó·Ç¿ÕÊ±ÖØ¸´Ö´ĞĞÏÂÁĞ²Ù×÷
-		DeQueue(&Q, &p);      // ³ö¶Ó
+	EnQueue(&Q, p);  //è®¿é—®æ ¹ç»“ç‚¹ï¼Œå¹¶å°†æ ¹ç»“ç‚¹å…¥é˜Ÿ 
+	while (!QueueEmpty(&Q)) {   //å½“é˜Ÿéç©ºæ—¶é‡å¤æ‰§è¡Œä¸‹åˆ—æ“ä½œ
+		DeQueue(&Q, &p);      // å‡ºé˜Ÿ
 		if (p->lchild)
 		{
 			printf("%c", p->lchild->data);EnQueue(&Q, p->lchild);
-		}  //´¦Àí×óº¢×Ó
+		}  //å¤„ç†å·¦å­©å­
 		if (p->rchild)
 		{
 			printf("%c", p->rchild->data);EnQueue(&Q, p->rchild);
-		} //´¦ÀíÓÒº¢×Ó
+		} //å¤„ç†å³å­©å­
 	}
 }
-/*********************************NROreOrder***************************************/
+/*********************************NRPreOrder***************************************/
 Status NRPreOrder(BiTree BT) {
 	BiTree p;
 	 Sqstack sq;
@@ -178,14 +178,14 @@ Status NRPreOrder(BiTree BT) {
 	{
 		while (p)
 		{
-		printf("%c",p->data);               /*·ÃÎÊ½áµãµÄÊı¾İÓò*/
-			PushStatck(&sq, &p);                         /*½«µ±Ç°Ö¸ÕëpÑ¹Õ»*/
-			p = p->lchild;              /*Ö¸ÕëÖ¸ÏòpµÄ×óº¢×Ó*/
+		printf("%c",p->data);               /*è®¿é—®ç»“ç‚¹çš„æ•°æ®åŸŸ*/
+			PushStatck(&sq, &p);                         /*å°†å½“å‰æŒ‡é’ˆpå‹æ ˆ*/
+			p = p->lchild;              /*æŒ‡é’ˆæŒ‡å‘pçš„å·¦å­©å­*/
 		}
 		if (!StackEmpty(&sq))
 		{
-			PopStack(&sq, &p);                         /*´ÓÕ»ÖĞµ¯³öÕ»¶¥ÔªËØ*/
-			p = p->rchild;                     /*Ö¸ÕëÖ¸ÏòpµÄÓÒº¢×Ó½áµã*/
+			PopStack(&sq, &p);                         /*ä»æ ˆä¸­å¼¹å‡ºæ ˆé¡¶å…ƒç´ */
+			p = p->rchild;                     /*æŒ‡é’ˆæŒ‡å‘pçš„å³å­©å­ç»“ç‚¹*/
 		}
 	}
 	return OK;
@@ -215,7 +215,7 @@ int main() {
 	int flag = 1, select;
 	printf("\n");
 	printf("To Creat Binary Tree,Please Input PreOrder with'#':");
-	BT=Pre_Create_BT();/*ÊäÈë¶ş²æÊ÷µÄÏÈĞòĞòÁĞ£¬ÓÃ#´ú±í¿Õ½áµã*/
+	BT=Pre_Create_BT();/*è¾“å…¥äºŒå‰æ ‘çš„å…ˆåºåºåˆ—ï¼Œç”¨#ä»£è¡¨ç©ºç»“ç‚¹*/
 	while (flag) {
 		printf("Please select:            \n");
 		printf("1.PreOrder Traversal      \n");
@@ -230,30 +230,30 @@ int main() {
 		scanf("%d", &select);
 
 		switch (select) {
-		case 1:printf("\n The  PreOrder Traversal of Binary Tree is£º");/*ÏÈĞòµİ¹é±éÀú*/
+		case 1:printf("\n The  PreOrder Traversal of Binary Tree isï¼š");/*å…ˆåºé€’å½’éå†*/
 			PreOrder(BT);
 			break;
 
-		case 2:printf("\n The  InOrder Traversal of Binary Tree is£º");/*ÖĞĞòµİ¹é±éÀú*/
+		case 2:printf("\n The  InOrder Traversal of Binary Tree isï¼š");/*ä¸­åºé€’å½’éå†*/
 			InOrder(BT);
 			break;
 
-		case 3:printf("\n The  InOrder Traversal of Binary Tree is £º");/*ºóĞò±éÀú*/
+		case 3:printf("\n The  InOrder Traversal of Binary Tree is ï¼š");/*ååºéå†*/
 			PostOrder(BT);
 			break;
 
-		case 4:printf("\n The  LevelOrder Traversal of Binary Tree is£º");/*°´²ã´Î·Çµİ¹é±éÀú*/
+		case 4:printf("\n The  LevelOrder Traversal of Binary Tree isï¼š");/*æŒ‰å±‚æ¬¡éé€’å½’éå†*/
 			LevelOrder(BT);
 			break;
 
-		case 5:printf("\n The  NRPreOrder Traversal of Binary Tree is£º");/*ÏÈĞò·Çµİ¹é±éÀú*/
+		case 5:printf("\n The  NRPreOrder Traversal of Binary Tree isï¼š");/*å…ˆåºéé€’å½’éå†*/
 			NRPreOrder(BT);
 			break;
 
-		case 6:printf("\n The  Depth of Binary Tree is£º%d", High(BT));/*µİ¹éÇó¶ş²æÊ÷¸ß¶È*/
+		case 6:printf("\n The  Depth of Binary Tree isï¼š%d", High(BT));/*é€’å½’æ±‚äºŒå‰æ ‘é«˜åº¦*/
 			break;
 
-		case 7:printf("\n The number of leaf is£º%d", LeafNUmber(BT));/*µİ¹éÇóÒ¶½ÚµãÊı*/
+		case 7:printf("\n The number of leaf isï¼š%d", LeafNUmber(BT));/*é€’å½’æ±‚å¶èŠ‚ç‚¹æ•°*/
 			break;
 		
 		default:flag = 0;
@@ -267,15 +267,15 @@ int main() {
  BiTree BT;
 	InitBiTree(&BT);
 	BT=Pre_Create_BT();
-	printf("ÏÈĞòµİ¹é±éÀúÊä³ö¶ş²æÊ÷\n");
+	printf("å…ˆåºé€’å½’éå†è¾“å‡ºäºŒå‰æ ‘\n");
 	PreOrder(BT);
 	printf("\n");
-	printf("ÖĞĞòµİ¹é±éÀúÊä³ö¶ş²æÊ÷\n");
+	printf("ä¸­åºé€’å½’éå†è¾“å‡ºäºŒå‰æ ‘\n");
 	InOrder(BT);
 	printf("\n");
-	printf("ºóĞòµİ¹é±éÀúÊä³ö¶ş²æÊ÷\n");
+	printf("ååºé€’å½’éå†è¾“å‡ºäºŒå‰æ ‘\n");
 	PostOrder(BT);
-	printf("ÏÈĞò·Çµİ¹é±éÀúÊä³ö¶ş²æÊ÷\n");
+	printf("å…ˆåºéé€’å½’éå†è¾“å‡ºäºŒå‰æ ‘\n");
 	NROrder(BT);
     return 0;
  */
